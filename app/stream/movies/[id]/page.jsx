@@ -524,8 +524,11 @@ const Page = () => {
                   src={activeServer.url}
                   title={activeServer.name}
                   className="absolute inset-0 h-full w-full border-0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen={true}
+                  allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                  allowFullScreen
+                  webkitAllowFullScreen
+                  mozAllowFullScreen
+                  referrerPolicy="no-referrer"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">

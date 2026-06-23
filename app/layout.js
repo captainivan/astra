@@ -25,8 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${getBebasNeue.variable} ${getPlusJakartaSans.variable} h-full antialiased`}
-      suppressHydrationWarning={true}
+      className={`${getBebasNeue.variable} ${getPlusJakartaSans.variable} h-full`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -11,6 +11,7 @@ import {
     Play,
     Star,
     Tv,
+    X,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -88,7 +89,6 @@ const Page = () => {
                 const getHearted = JSON.parse(localStorage.getItem("Hearted") || "[]");
                 const arr = [];
 
-                console.log("actual heart data ---------- ", getHearted);
 
                 if (getHearted.length === 0) {
                     setHeart([]);
@@ -160,8 +160,7 @@ const Page = () => {
 
     const getStillPath = (item) => {
         const stillPath = item?.response?.still_path;
-        console.log(stillPath);
-        
+
         if (!stillPath) return null;
 
         return `${TMDB_IMAGE_BASE_URL}${stillPath}`;
@@ -193,12 +192,35 @@ const Page = () => {
         router.push(`/details/series/${seriesId}`);
     };
 
+    const handleHistoryRemove = (id, type) => {
+        const getHistory = JSON.parse(localStorage.getItem("History") || "[]");
+
+        let filteredHistory;
+
+        if (type === "movie") {
+            filteredHistory = getHistory.filter((item) => {
+                return String(item.movie) !== String(id);
+            });
+        } else {
+            filteredHistory = getHistory.filter((item) => {
+                return !(
+                    String(item.series) === String(id.series) &&
+                    String(item.season) === String(id.season) &&
+                    String(item.episode) === String(id.episode)
+                );
+            });
+        }
+
+        localStorage.setItem("History", JSON.stringify(filteredHistory));
+        window.location.reload();
+    };
+
     const activeData = activeTab === "history" ? history : heart;
     const activeLoading = activeTab === "history" ? historyLoading : heartLoading;
 
     return (
         <main className="min-h-screen overflow-x-hidden bg-[#050509] text-white">
-            <NavBar/>
+            <NavBar />
             {/* Background Effects */}
             <div className="pointer-events-none fixed inset-0 overflow-hidden">
                 <div className="absolute left-[-120px] top-[-120px] h-80 w-80 rounded-full bg-[#7C3AED]/20 blur-[120px]" />
@@ -251,8 +273,8 @@ const Page = () => {
                             type="button"
                             onClick={() => setActiveTab("history")}
                             className={`h-12 rounded-2xl text-sm font-bold transition-all sm:h-14 sm:text-base ${activeTab === "history"
-                                    ? "bg-[#7C3AED] text-white shadow-lg shadow-[#7C3AED]/30 hover:bg-[#7C3AED]"
-                                    : "bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white"
+                                ? "bg-[#7C3AED] text-white shadow-lg shadow-[#7C3AED]/30 hover:bg-[#7C3AED]"
+                                : "bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white"
                                 }`}
                         >
                             <History size={18} />
@@ -263,8 +285,8 @@ const Page = () => {
                             type="button"
                             onClick={() => setActiveTab("hearted")}
                             className={`h-12 rounded-2xl text-sm font-bold transition-all sm:h-14 sm:text-base ${activeTab === "hearted"
-                                    ? "bg-[#7C3AED] text-white shadow-lg shadow-[#7C3AED]/30 hover:bg-[#7C3AED]"
-                                    : "bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white"
+                                ? "bg-[#7C3AED] text-white shadow-lg shadow-[#7C3AED]/30 hover:bg-[#7C3AED]"
+                                : "bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white"
                                 }`}
                         >
                             <Heart
@@ -356,12 +378,12 @@ const Page = () => {
                             const backdrop = getBackdrop(item);
                             const stillPath = getStillPath(item);
                             const isMovie = item.type === "movie";
+                            const type = item.historyData;
+
 
                             return (
-                                <button
+                                <div
                                     key={`${item.type}-${item?.response?.id || index}`}
-                                    type="button"
-                                    onClick={() => handleCardClick(item)}
                                     className="group relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-3 text-left shadow-xl shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:border-[#7C3AED]/50 hover:bg-white/[0.06] active:scale-[0.98]"
                                 >
                                     {/* Poster / Backdrop */}
@@ -383,15 +405,18 @@ const Page = () => {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
                                         {/* Type Badge */}
-                                        <div className="absolute left-3 top-3">
+                                        <div className="absolute w-full top-3 flex items-center justify-between p-2">
                                             <div
                                                 className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold backdrop-blur-xl ${isMovie
-                                                        ? "border-[#7C3AED]/40 bg-[#7C3AED]/25 text-[#DDD6FE]"
-                                                        : "border-[#3B82F6]/40 bg-[#3B82F6]/20 text-[#BFDBFE]"
+                                                    ? "border-[#7C3AED]/40 bg-[#7C3AED]/25 text-[#DDD6FE]"
+                                                    : "border-[#3B82F6]/40 bg-[#3B82F6]/20 text-[#BFDBFE]"
                                                     }`}
                                             >
                                                 {isMovie ? <Film size={13} /> : <Tv size={13} />}
                                                 {isMovie ? "Movie" : "Series"}
+                                            </div>
+                                            <div>
+                                                {type ? <Button onClick={() => { isMovie ? handleHistoryRemove(item.historyData.movie, "movie") : handleHistoryRemove(item.historyData, "series") }} className={`cursor-pointer rounded-full `}><X /></Button> : <></>}
                                             </div>
                                         </div>
 
@@ -448,17 +473,13 @@ const Page = () => {
                                             <div className="min-w-0">
                                                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/25">
                                                     {activeTab === "history"
-                                                        ? "Continue Watching"
+                                                        ? <Button onClick={() => handleCardClick(item)} className={`cursor-pointer bg-purple`}>Continue Watching</Button>
                                                         : "Saved Item"}
                                                 </p>
                                             </div>
-
-                                            <div className="rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/15 px-3 py-1.5 text-xs font-bold text-[#C4B5FD] transition group-hover:bg-[#7C3AED] group-hover:text-white">
-                                                Open
-                                            </div>
                                         </div>
                                     </div>
-                                </button>
+                                </div>
                             );
                         })}
                     </div>
