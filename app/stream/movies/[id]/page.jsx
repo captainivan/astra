@@ -524,10 +524,9 @@ const Page = () => {
                   src={activeServer.url}
                   title={activeServer.name}
                   className="absolute inset-0 h-full w-full border-0"
-                  allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                  allowFullScreen
-                  webkitAllowFullScreen
-                  mozAllowFullScreen
+                  allowFullScreen={true}
+                  webkitAllowFullScreen={true}
+                  mozAllowFullScreen={true}
                   referrerPolicy="no-referrer"
                 />
               ) : (

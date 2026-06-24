@@ -184,12 +184,14 @@ const Page = () => {
     const handleCardClick = (item) => {
         if (item.type === "movie") {
             const movieId = item?.response?.id || item?.historyData?.movie || item?.heartData?.id;
-            router.push(`/details/movies/${movieId}`);
+            router.push(`/stream/movies/${movieId}`);
             return;
         }
 
-        const seriesId = item?.response?.id || item?.historyData?.series || item?.heartData?.id;
-        router.push(`/details/series/${seriesId}`);
+        const seriesId =  item?.historyData?.series;
+        const epsiode = item?.historyData?.episode;
+        const season = item?.historyData?.season;
+        router.push(`/stream/series/${seriesId}/${season}/${epsiode}`);
     };
 
     const handleHistoryRemove = (id, type) => {
@@ -473,7 +475,7 @@ const Page = () => {
                                             <div className="min-w-0">
                                                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/25">
                                                     {activeTab === "history"
-                                                        ? <Button onClick={() => handleCardClick(item)} className={`cursor-pointer bg-purple`}>Continue Watching</Button>
+                                                        ? <Button onClick={() => handleCardClick(item)} className={`cursor-pointer bg-[#7C3AED] text-white w-full  rounded-xl`}>Continue Watching</Button>
                                                         : "Saved Item"}
                                                 </p>
                                             </div>

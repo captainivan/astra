@@ -82,8 +82,8 @@ const ServerButton = ({ server, active, onClick }) => {
       type="button"
       onClick={onClick}
       className={`group flex w-full items-center justify-between gap-3 rounded-2xl border p-3 text-left transition-all duration-300 active:scale-[0.98] ${active
-          ? "border-[#7C3AED]/60 bg-[#7C3AED]/15 text-white shadow-[0_0_24px_rgba(124,58,237,0.16)]"
-          : "border-white/10 bg-white/[0.035] text-white/60 hover:border-[#7C3AED]/45 hover:bg-white/[0.06] hover:text-white"
+        ? "border-[#7C3AED]/60 bg-[#7C3AED]/15 text-white shadow-[0_0_24px_rgba(124,58,237,0.16)]"
+        : "border-white/10 bg-white/[0.035] text-white/60 hover:border-[#7C3AED]/45 hover:bg-white/[0.06] hover:text-white"
         }`}
     >
       <div className="flex min-w-0 items-center gap-3">
@@ -337,8 +337,8 @@ const SeasonCard = ({ season, active, onClick }) => {
       type="button"
       onClick={onClick}
       className={`group min-w-0 cursor-pointer overflow-hidden rounded-2xl border text-left transition hover:-translate-y-1 ${active
-          ? "border-[#7C3AED]/60 bg-[#7C3AED]/15"
-          : "border-white/10 bg-white/[0.035] hover:border-[#7C3AED]/45 hover:bg-white/[0.06]"
+        ? "border-[#7C3AED]/60 bg-[#7C3AED]/15"
+        : "border-white/10 bg-white/[0.035] hover:border-[#7C3AED]/45 hover:bg-white/[0.06]"
         }`}
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-white/[0.04]">
@@ -391,10 +391,10 @@ const EpisodeListItem = ({
   return (
     <div
       className={`overflow-hidden rounded-2xl border transition ${selected
-          ? "border-[#7C3AED]/60 bg-[#7C3AED]/12 shadow-[0_0_24px_rgba(124,58,237,0.14)]"
-          : watched
-            ? "border-emerald-400/35 bg-emerald-400/[0.08] hover:border-emerald-400/50"
-            : "border-white/10 bg-white/[0.035] hover:border-[#7C3AED]/40 hover:bg-white/[0.055]"
+        ? "border-[#7C3AED]/60 bg-[#7C3AED]/12 shadow-[0_0_24px_rgba(124,58,237,0.14)]"
+        : watched
+          ? "border-emerald-400/35 bg-emerald-400/[0.08] hover:border-emerald-400/50"
+          : "border-white/10 bg-white/[0.035] hover:border-[#7C3AED]/40 hover:bg-white/[0.055]"
         }`}
     >
       <div className="flex min-w-0 items-center gap-3 p-3">
@@ -419,10 +419,10 @@ const EpisodeListItem = ({
 
           <span
             className={`absolute left-2 top-2 rounded-full border px-2 py-0.5 text-[10px] font-black backdrop-blur-md ${selected
-                ? "border-[#7C3AED]/50 bg-[#7C3AED]/40 text-white"
-                : watched
-                  ? "border-emerald-400/40 bg-emerald-500/70 text-white"
-                  : "border-black/20 bg-black/60 text-white/80"
+              ? "border-[#7C3AED]/50 bg-[#7C3AED]/40 text-white"
+              : watched
+                ? "border-emerald-400/40 bg-emerald-500/70 text-white"
+                : "border-black/20 bg-black/60 text-white/80"
               }`}
           >
             EP {episode?.episode_number}
@@ -870,10 +870,9 @@ const Page = () => {
                   src={activeServer.url}
                   title={activeServer.name}
                   className="absolute inset-0 h-full w-full border-0"
-                  allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                  allowFullScreen
-                  webkitallowfullscreen="true"
-                  mozallowfullscreen="true"
+                  allowFullScreen={true}
+                  webkitAllowFullScreen={true}
+                  mozAllowFullScreen={true}
                   referrerPolicy="no-referrer"
                 />
               ) : (
@@ -939,8 +938,8 @@ const Page = () => {
                         setServerMenuOpen(false);
                       }}
                       className={`mb-2 flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm transition last:mb-0 ${activeServer?.id === server.id
-                          ? "bg-[#7C3AED]/20 text-white"
-                          : "text-white/60 hover:bg-white/[0.06] hover:text-white"
+                        ? "bg-[#7C3AED]/20 text-white"
+                        : "text-white/60 hover:bg-white/[0.06] hover:text-white"
                         }`}
                     >
                       <span className="truncate font-bold">{server.name}</span>
