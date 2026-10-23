@@ -315,7 +315,7 @@ const Page = () => {
       id: "direct-vidsrc",
       name: "Vidsrc Direct",
       group: "Recommended Server",
-      url: `https://vidsrc-embed.ru/embed/movie/${movieId}`,
+      url: `https://vidsrc.sh/embed/movie/${movieId}`,
       recommended: true,
     };
 

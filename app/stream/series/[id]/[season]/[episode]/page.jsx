@@ -632,7 +632,7 @@ const Page = () => {
         id: "vidsrc",
         name: "Vidsrc Direct",
         group: "Recommended Server",
-        url: `https://vidsrc-embed.ru/embed/tv?tmdb=${seriesId}&season=${activeSeason}&episode=${activeEpisode}`,
+        url: `https://vidsrc.sh/embed/tv/${seriesId}/${activeSeason}/${activeEpisode}`,
         recommended: true,
       },
       {
